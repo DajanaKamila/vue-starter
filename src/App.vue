@@ -2,14 +2,25 @@
   <div class="my-app">
 <!--    <h1>Twój email to {{email}}</h1>-->
     <h1>Witaj w systemie do zapisów na zajęcia</h1>
+
+
     <div v-if="loggedIn == false">
-        <p>Zaloguj się e-mailem
-        <input type="email" v-model="email">
-        <button @click="login()">Wchodzę</button></p></div>
-    <div v-if="loggedIn == true">
-        <p>Witaj {{email}}</p>
-        <p id="p2" @click="logout()">Wyloguj</p></div>
+      <LoginForm @login="(username) => logMeIn(username)"></LoginForm>
     </div>
+    <div v-if="loggedIn == true">
+      <p>Witaj {{authenticatedUsername}}</p>
+      <button @click="logout()">Wyloguj</button></div>
+  </div>
+
+
+<!--    <div v-if="loggedIn == false">-->
+<!--        <p>Zaloguj się e-mailem-->
+<!--        <input type="email" v-model="email">-->
+<!--        <button @click="login()">Wchodzę</button></p></div>-->
+<!--    <div v-if="loggedIn == true">-->
+<!--        <p>Witaj {{email}}</p>-->
+<!--        <p id="p2" @click="logout()">Wyloguj</p></div>-->
+<!--    </div>-->
 
 
 <!--    <div v-if="email.length < 10">Ale masz krótki adres!</div>-->
@@ -29,6 +40,7 @@ export default {
       email: '',
       password: '',
       loggedIn: false,
+      authenticatedUsername: ''
     };
   },
   methods: {
@@ -41,6 +53,10 @@ export default {
     logout(){
       this.loggedIn = false;
       this.email = '';
+    },
+    logMeIn(username) {
+      this.authenticatedUsername = username;
+      this.loggedIn = true;
     }
   },
   components: {LoginForm},
