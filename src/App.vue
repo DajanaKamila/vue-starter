@@ -3,13 +3,17 @@
 <!--    <h1>Twój email to {{email}}</h1>-->
     <h1>Witaj w systemie do zapisów na zajęcia</h1>
 
-
-    <div v-if="loggedIn == false">
-      <LoginForm @login="(username) => logMeIn(username)"></LoginForm>
-    </div>
-    <div v-if="loggedIn == true">
+    <div v-if="authenticatedUsername.length > 0 ">
       <p>Witaj {{authenticatedUsername}}</p>
-      <button @click="logout()">Wyloguj</button></div>
+      <button @click="logout()">Wyloguj</button>
+    </div>
+    <div v-else>
+      <LoginForm @login="(username) => logMeIn(username)"></LoginForm>
+      <LoginForm @login="enter($event)" button-label="Wejdź"></LoginForm>
+      <LoginForm @login="enter($event)" button-label="Wleć"></LoginForm>
+      <LoginForm @login="enter($event)" :button-label="Math.random() < 0.5 ? 'Etykieta A' : 'Etykieta B'"></LoginForm>
+    </div>
+
   </div>
 
 
@@ -37,26 +41,25 @@ import LoginForm from "./LoginForm";
 export default {
   data() {
     return {
-      email: '',
+      authenticatedUsername: '',
       password: '',
-      loggedIn: false,
-      authenticatedUsername: ''
+      // loggedIn: false,
     };
   },
   methods: {
     alertMyEmail() {
       alert(this.email);
     },
-    login(){
-      this.loggedIn = true;
-    },
+    // login(){
+    //   this.loggedIn = true;
+    // },
     logout(){
-      this.loggedIn = false;
-      this.email = '';
+      // this.loggedIn = false;
+      this.authenticatedUsername = '';
     },
     logMeIn(username) {
       this.authenticatedUsername = username;
-      this.loggedIn = true;
+      // this.loggedIn = true;
     }
   },
   components: {LoginForm},
