@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import "milligram";
+import LoginForm from "./LoginForm";
 export default {
   data() {
     return {
@@ -37,9 +39,12 @@ export default {
       this.loggedIn = true;
     },
     logout(){
-      this.loggedIn = false
+      this.loggedIn = false;
+      this.email = '';
     }
-  }
+  },
+  components: {LoginForm},
+
 }
 </script>
 
